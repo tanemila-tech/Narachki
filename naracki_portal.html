@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Доорс Импекс — Следење на Нарачка</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f3ee;
+    --bg2: #efe9e0;
+    --card: #ffffff;
+    --card2: #f2ece4;
+    --orange: #e86c1f;
+    --orange2: #d05e10;
+    --orange-glow: rgba(232,108,31,0.1);
+    --orange-border: rgba(232,108,31,0.25);
+    --text: #2a2420;
+    --muted: #9a8f85;
+    --muted2: #c4b9af;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.05);
+    --gray: #6b6560;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* HEADER */
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+  }
+
+  .logo-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .logo-name span { color: var(--orange); }
+
+  .logo-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+    border-radius: 50%;
+    margin-left: 3px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .header-right a {
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+
+  .header-right a:hover { color: var(--orange); }
+  .header-right a.phone { color: var(--text); font-weight: 600; font-size: 13px; }
+
+  /* HERO */
+  .hero {
+    padding: 60px 24px 44px;
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: var(--orange-glow);
+    border: 1px solid var(--orange-border);
+    color: var(--orange);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 22px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(38px, 9vw, 62px);
+    font-weight: 800;
+    line-height: 1.0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--orange);
+  }
+
+  .hero p {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 400px;
+    margin: 0 auto 0;
+    font-weight: 300;
+  }
+
+  /* DIVIDER LINE */
+  .section-line {
+    width: 48px;
+    height: 3px;
+    background: var(--orange);
+    border-radius: 2px;
+    margin: 28px auto;
+  }
+
+  /* SEARCH */
+  .search-wrap {
+    max-width: 560px;
+    margin: 0 auto 52px;
+    padding: 0 20px;
+  }
+
+  .search-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+  }
+
+  .search-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .search-row { display: flex; gap: 10px; }
+
+  .search-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(232,108,31,0.1);
+    background: #fff;
+  }
+
+  .search-input::placeholder { color: var(--muted2); font-weight: 300; }
+
+  .search-btn {
+    padding: 14px 26px;
+    background: var(--orange);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    box-shadow: 0 3px 12px rgba(232,108,31,0.25);
+  }
+
+  .search-btn:hover {
+    background: var(--orange2);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(232,108,31,0.35);
+  }
+
+  .search-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  /* LOADING */
+  .loading { display: none; text-align: center; padding: 20px; }
+  .loading.show { display: block; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--orange); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 10px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* RESULT */
+  .result-wrap { max-width: 560px; margin: 0 auto 52px; padding: 0 20px; display: none; }
+  .result-wrap.show { display: block; animation: up 0.4s cubic-bezier(0.22,1,0.36,1); }
+  @keyframes up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .result-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  .result-top-bar {
+    height: 4px;
+    background: linear-gradient(90deg, var(--orange) 0%, #f5a96a 100%);
+  }
+
+  .result-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border2);
+    background: var(--card2);
+  }
+
+  .res-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .res-client {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  .status-pill {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .s-montaza  { background: #edf7f0; color: #2d7a4f; border: 1px solid #b8e0c8; }
+  .s-merki    { background: #fef6ec; color: #b86010; border: 1px solid #f5d4a8; }
+  .s-cekanje  { background: #f4f2f0; color: #7a7068; border: 1px solid #ddd8d3; }
+  .s-zavrsena { background: #eef5fb; color: #1f6a9e; border: 1px solid #b8d8f0; }
+  .s-default  { background: var(--orange-glow); color: var(--orange); border: 1px solid var(--orange-border); }
+
+  .result-body { padding: 22px 24px; }
+
+  .loc-banner {
+    background: var(--orange-glow);
+    border: 1px solid var(--orange-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .loc-val { color: var(--orange); font-weight: 600; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .info-item {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 14px;
+  }
+
+  .info-item .lbl {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .info-item .val {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
+
+  .tl-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+
+  .timeline { display: flex; align-items: flex-start; }
+
+  .tl-step { display: flex; flex-direction: column; align-items: center; flex: 1; }
+
+  .tl-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 2px solid var(--muted2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 1;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .tl-dot.done { background: #edf7f0; border-color: #7dcba0; }
+  .tl-dot.active { background: var(--orange); border-color: var(--orange); box-shadow: 0 0 0 4px rgba(232,108,31,0.15); }
+
+  .tl-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--muted2);
+    margin: 0 -1px;
+    align-self: center;
+    position: relative;
+    top: -14px;
+    transition: background 0.4s;
+  }
+
+  .tl-connector.done { background: #7dcba0; }
+
+  .tl-lbl {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 8px;
+    max-width: 58px;
+    line-height: 1.3;
+  }
+
+  .tl-lbl.active { color: var(--orange); font-weight: 700; }
+  .tl-lbl.done { color: #2d7a4f; }
+
+  /* NOT FOUND */
+  .not-found-wrap { max-width: 560px; margin: 0 auto 52px; padding: 0 20px; display: none; }
+  .not-found-wrap.show { display: block; animation: up 0.3s ease; }
+
+  .not-found-card {
+    background: var(--card);
+    border: 1px solid #f0d0c8;
+    border-radius: 18px;
+    padding: 44px 24px;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+
+  .nf-icon { font-size: 44px; margin-bottom: 14px; }
+  .not-found-card h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text); margin-bottom: 10px; }
+  .not-found-card p { font-size: 14px; color: var(--muted); line-height: 1.7; font-weight: 300; }
+  .not-found-card a { color: var(--orange); text-decoration: none; font-weight: 500; }
+
+  /* STATS */
+  .stats-bar {
+    max-width: 560px;
+    margin: 0 auto 44px;
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 18px 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .stat-item:first-child { border-radius: 12px 0 0 12px; }
+  .stat-item:last-child  { border-radius: 0 12px 12px 0; }
+  .stat-item + .stat-item { border-left: none; }
+
+  .stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 800; color: var(--orange); line-height: 1; margin-bottom: 4px; }
+  .stat-lbl { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--text);
+    padding: 30px 24px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .footer-logo span { color: var(--orange); }
+
+  footer p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 2; font-weight: 300; }
+  footer a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--orange); }
+
+  @media (max-width: 480px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .search-row { flex-direction: column; }
+    .stats-bar { flex-wrap: wrap; gap: 8px; }
+    .stat-item { border-radius: 10px !important; border: 1px solid var(--border) !important; min-width: calc(50% - 4px); }
+    header { padding: 0 16px; }
+    .hero { padding: 40px 16px 32px; }
+    .header-right { display: none; }
+    .tl-lbl { font-size: 9px; max-width: 46px; }
+    .tl-dot { width: 32px; height: 32px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-name">ДООРС <span>ИМПЕКС</span><span class="logo-dot"></span></div>
+  <div class="header-right">
+    <a href="tel:+38978365676" class="phone">+389 78 365 676</a>
+    <a href="mailto:info@doorsimpeks.mk">info@doorsimpeks.mk</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">Следење на нарачка</div>
+  <h1>Проверете го<br>статусот на вашата<br><em>нарачка</em></h1>
+  <p>Внесете го бројот на нарачката или понудата и во моментот дознајте каде се наоѓа вашиот производ.</p>
+  <div class="section-line"></div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">10+</div><div class="stat-lbl">Год. искуство</div></div>
+  <div class="stat-item"><div class="stat-num">24h</div><div class="stat-lbl">Поддршка</div></div>
+  <div class="stat-item"><div class="stat-num">2г.</div><div class="stat-lbl">Гаранција</div></div>
+  <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Задоволство</div></div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-card">
+    <label class="search-label">Број на нарачка или понуда</label>
+    <div class="search-row">
+      <input type="text" class="search-input" id="searchInput" placeholder="пр. ORD1001-26 или PO1001-26" autocomplete="off"/>
+      <button class="search-btn" onclick="searchOrder()">Пребарај</button>
+    </div>
+    <p class="search-hint">Бројот го наоѓате на вашата понуда или договор</p>
+  </div>
+</div>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p style="color:var(--muted);font-size:13px;font-weight:300">Се пребарува...</p>
+</div>
+
+<div class="result-wrap" id="resultContainer">
+  <div class="result-card">
+    <div class="result-top-bar"></div>
+    <div class="result-header">
+      <div>
+        <div class="res-num" id="res-broj">—</div>
+        <div class="res-client" id="res-klient">—</div>
+      </div>
+      <div class="status-pill s-default" id="res-status-badge">—</div>
+    </div>
+    <div class="result-body">
+      <div class="loc-banner" id="res-location-banner" style="display:none">
+        <span style="font-size:18px">📍</span>
+        <span>Моментална локација: <span class="loc-val" id="res-location">—</span></span>
+      </div>
+      <div class="info-grid">
+        <div class="info-item"><div class="lbl">Тип на артикл</div><div class="val" id="res-tip">—</div></div>
+        <div class="info-item"><div class="lbl">Рок за монтажа</div><div class="val" id="res-rok">—</div></div>
+        <div class="info-item"><div class="lbl">Датум нарачка</div><div class="val" id="res-datum">—</div></div>
+        <div class="info-item"><div class="lbl">Очек. пристигање</div><div class="val" id="res-pristiganje">—</div></div>
+      </div>
+      <hr class="divider">
+      <div class="tl-title">Напредок на нарачката</div>
+      <div class="timeline">
+        <div class="tl-step"><div class="tl-dot" id="tl1">📋</div><div class="tl-lbl" id="tl1-label">Нарачка</div></div>
+        <div class="tl-connector" id="tl-line1"></div>
+        <div class="tl-step"><div class="tl-dot" id="tl2">📐</div><div class="tl-lbl" id="tl2-label">Мерки</div></div>
+        <div class="tl-connector" id="tl-line2"></div>
+        <div class="tl-step"><div class="tl-dot" id="tl3">🚚</div><div class="tl-lbl" id="tl3-label">Испорака</div></div>
+        <div class="tl-connector" id="tl-line3"></div>
+        <div class="tl-step"><div class="tl-dot" id="tl4">🔨</div><div class="tl-lbl" id="tl4-label">Монтажа</div></div>
+        <div class="tl-connector" id="tl-line4"></div>
+        <div class="tl-step"><div class="tl-dot" id="tl5">✅</div><div class="tl-lbl" id="tl5-label">Завршено</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="not-found-wrap" id="notFound">
+  <div class="not-found-card">
+    <div class="nf-icon">🔎</div>
+    <h3>Нарачката не е пронајдена</h3>
+    <p>Проверете го бројот и обидете се повторно.<br>За помош јавете се на <a href="tel:+38978365676">+389 78 365 676</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">ДООРС <span>ИМПЕКС</span></div>
+  <p>Боца Ивановска 35, Скопје<br>
+  <a href="tel:+38978365676">+389 78 365 676</a> · <a href="mailto:info@doorsimpeks.mk">info@doorsimpeks.mk</a> · <a href="https://doorsimpeks.mk" target="_blank">doorsimpeks.mk</a></p>
+</footer>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy6pQxwYpwniS3OxpQMpJOzRyVSX7oXQ5-JTl2BaXgm1vhbG7UGo2ck0U8yBZrBusRFg/exec';
+
+  async function searchOrder() {
+    const query = document.getElementById('searchInput').value.trim();
+    if (!query) return;
+    document.getElementById('resultContainer').classList.remove('show');
+    document.getElementById('notFound').classList.remove('show');
+    document.getElementById('loading').classList.add('show');
+    try {
+      const resp = await fetch(`${SCRIPT_URL}?q=${encodeURIComponent(query)}`);
+      const json = await resp.json();
+      document.getElementById('loading').classList.remove('show');
+      if (json.status === 'ok') {
+        const d = json.data;
+        const status = d.status || '—';
+        document.getElementById('res-broj').textContent = d.broj;
+        document.getElementById('res-klient').textContent = '👤 ' + d.klient;
+        document.getElementById('res-tip').textContent = d.tip;
+        document.getElementById('res-rok').textContent = d.rok;
+        document.getElementById('res-datum').textContent = d.datum;
+        document.getElementById('res-pristiganje').textContent = d.pristiganje;
+        const loc = d.lokacija || '—';
+        document.getElementById('res-location').textContent = loc;
+        document.getElementById('res-location-banner').style.display = (loc === '—' || loc === '') ? 'none' : 'flex';
+        const badge = document.getElementById('res-status-badge');
+        badge.textContent = status;
+        badge.className = 'status-pill';
+        const s = status.toLowerCase();
+        if (s.includes('монтаж')) badge.classList.add('s-montaza');
+        else if (s.includes('мерки') || s.includes('увид')) badge.classList.add('s-merki');
+        else if (s.includes('чекање')) badge.classList.add('s-cekanje');
+        else if (s.includes('заврш')) badge.classList.add('s-zavrsena');
+        else badge.classList.add('s-default');
+        updateTimeline(status);
+        document.getElementById('resultContainer').classList.add('show');
+      } else {
+        document.getElementById('notFound').classList.add('show');
+      }
+    } catch (e) {
+      document.getElementById('loading').classList.remove('show');
+      document.getElementById('notFound').classList.add('show');
+      console.error(e);
+    }
+  }
+
+  function updateTimeline(status) {
+    const s = status.toLowerCase();
+    let step = 1;
+    if (s.includes('мерки') || s.includes('увид')) step = 2;
+    else if (s.includes('испорак') || s.includes('логистик') || s.includes('пристиган')) step = 3;
+    else if (s.includes('монтаж')) step = 4;
+    else if (s.includes('заврш')) step = 5;
+    for (let i = 1; i <= 5; i++) {
+      const dot = document.getElementById('tl' + i);
+      const lbl = document.getElementById('tl' + i + '-label');
+      dot.className = 'tl-dot';
+      lbl.className = 'tl-lbl';
+      if (i < step) { dot.classList.add('done'); lbl.classList.add('done'); }
+      else if (i === step) { dot.classList.add('active'); lbl.classList.add('active'); }
+    }
+    for (let i = 1; i <= 4; i++) {
+      const line = document.getElementById('tl-line' + i);
+      line.className = 'tl-connector';
+      if (i < step) line.classList.add('done');
+    }
+  }
+
+  document.getElementById('searchInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchOrder();
+  });
+</script>
+</body>
+</html>
